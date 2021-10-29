@@ -192,9 +192,9 @@ figure <- ggpubr::ggarrange(c, d, ncol = 2)
 figure |>
   ggplot2::ggsave(filename = here::here("figures","combined.png"),
                   device = "png",
-                  units = "in",
-                  width = 24,
-                  height = 6.75)
+                  units = "px",
+                  width = 3840,
+                  height = 1080)
 
 # Tweet report ----
 # create Twitter token
