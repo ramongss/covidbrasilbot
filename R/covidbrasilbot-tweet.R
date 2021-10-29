@@ -3,6 +3,7 @@
 Sys.setlocale("LC_ALL", "Portuguese")
 
 # load libraries
+devtools::install_github("hadley/emo")
 library(extrafont)
 
 # dowload and treat data
