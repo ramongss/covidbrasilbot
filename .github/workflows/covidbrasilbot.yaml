@@ -8,7 +8,7 @@ on:
 
 jobs:
   covidbrasilbot-post:
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     env:
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
       TWITTER_CONSUMER_API_SECRET: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
@@ -16,16 +16,11 @@ jobs:
       TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       LANG: "pt_BR.UTF-8"
+      LC_CTYPE: "pt_BR.UTF-8"
+      LC_ALL: "pt_BR.UTF-8"
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
-      - name: pt_BR.UTF-8
-        run: |
-            sudo locale-gen pt_BR.UTF-8
-            sudo update-locale LANG=pt_BR.UTF-8
-      - name: Test language
-        run: |
-            date
       - name: Install CRAN packages
         run: Rscript -e 'install.packages(c("rtweet", "dplyr", "extrafont", "ggplot2", "zoo", "ggpubr", "here", "R.utils", "data.table"))'
       - name: Create and post tweet
