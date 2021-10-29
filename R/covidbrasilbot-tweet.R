@@ -3,7 +3,7 @@
 Sys.setlocale("LC_ALL", "Portuguese")
 
 # load libraries
-devtools::install_github("hadley/emo")
+# devtools::install_github("hadley/emo")
 library(extrafont)
 
 # dowload and treat data
@@ -207,13 +207,43 @@ covidbrasilbot_token <- rtweet::create_token(
 )
 
 # build the status message
+# tweet_text <-
+#   paste0(
+#     emo::ji("calendar"),
+#     " ",
+#     format.Date(max(data_br$date), "%d %B de %Y"),
+#     "\n\n",
+#     emo::ji("brazil"),
+#     " Brasil soma ",
+#     format(sum(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
+#     " casos confirmados e ",
+#     format(sum(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
+#     " óbitos, com ",
+#     format(tail(data_br$new_confirmed, 1), nsmall=1, big.mark=".", decimal.mark = ","),
+#     " novos casos e ",
+#     format(tail(data_br$new_deaths, 1), nsmall=1, big.mark=".", decimal.mark = ","),
+#     " novos óbitos. \n\n",
+#     emo::ji("bar_chart"),
+#     " A incidência máxima de: \n",
+#     emo::ji("up_arrow"),
+#     " casos confirmados foi de ",
+#     format(max(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
+#     " em ",
+#     format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d %B de %Y"),
+#     "; \n",
+#     emo::ji("up_arrow"),
+#     " óbitos foi de ",
+#     format(max(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
+#     " em ",
+#     format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d %B de %Y"),
+#     "."
+#   )
+
 tweet_text <-
   paste0(
-    emo::ji("calendar"),
-    " ",
+    "📅 ",
     format.Date(max(data_br$date), "%d %B de %Y"),
-    "\n\n",
-    emo::ji("brazil"),
+    "\n\n🇧🇷 ",
     " Brasil soma ",
     format(sum(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
     " casos confirmados e ",
@@ -223,16 +253,13 @@ tweet_text <-
     " novos casos e ",
     format(tail(data_br$new_deaths, 1), nsmall=1, big.mark=".", decimal.mark = ","),
     " novos óbitos. \n\n",
-    emo::ji("bar_chart"),
-    " A incidência máxima de: \n",
-    emo::ji("up_arrow"),
-    " casos confirmados foi de ",
+    "📊 A incidência máxima de: \n",
+    "⬆️ casos confirmados foi de ",
     format(max(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
     format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d %B de %Y"),
     "; \n",
-    emo::ji("up_arrow"),
-    " óbitos foi de ",
+    "⬆️ óbitos foi de ",
     format(max(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
     format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d %B de %Y"),
