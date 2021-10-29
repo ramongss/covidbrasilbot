@@ -268,5 +268,5 @@ tweet_text <-
 
 # post the image to Twitter
 rtweet::post_tweet(status = tweet_text,
-                   media = here::here("figures","combined.png"),
+                   # media = here::here("figures","combined.png"),
                    token = covidbrasilbot_token)
