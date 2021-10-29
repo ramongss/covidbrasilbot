@@ -3,7 +3,6 @@
 Sys.setlocale("LC_ALL", "Portuguese")
 
 # load libraries
-# devtools::install_github("hadley/emo")
 library(extrafont)
 
 # dowload and treat data
@@ -190,11 +189,11 @@ d <- ma_plot_deaths(data_br, colour = "#9B0000")
 figure <- ggpubr::ggarrange(c, d, ncol = 2)
 
 figure |>
-  ggplot2::ggsave(filename = here::here("figures","combined.png"),
+  ggplot2::ggsave(filename = here::here("fig.png"),
                   device = "png",
-                  units = "px",
-                  width = 3840,
-                  height = 1080)
+                  units = "in",
+                  width = 24,
+                  height = 6.75)
 
 # Tweet report ----
 # create Twitter token
@@ -206,39 +205,7 @@ covidbrasilbot_token <- rtweet::create_token(
   access_secret = Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 )
 
-# build the status message
-# tweet_text <-
-#   paste0(
-#     emo::ji("calendar"),
-#     " ",
-#     format.Date(max(data_br$date), "%d %B de %Y"),
-#     "\n\n",
-#     emo::ji("brazil"),
-#     " Brasil soma ",
-#     format(sum(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
-#     " casos confirmados e ",
-#     format(sum(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
-#     " óbitos, com ",
-#     format(tail(data_br$new_confirmed, 1), nsmall=1, big.mark=".", decimal.mark = ","),
-#     " novos casos e ",
-#     format(tail(data_br$new_deaths, 1), nsmall=1, big.mark=".", decimal.mark = ","),
-#     " novos óbitos. \n\n",
-#     emo::ji("bar_chart"),
-#     " A incidência máxima de: \n",
-#     emo::ji("up_arrow"),
-#     " casos confirmados foi de ",
-#     format(max(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
-#     " em ",
-#     format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d %B de %Y"),
-#     "; \n",
-#     emo::ji("up_arrow"),
-#     " óbitos foi de ",
-#     format(max(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
-#     " em ",
-#     format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d %B de %Y"),
-#     "."
-#   )
-
+# create Tweet status
 tweet_text <-
   paste0(
     "📅 ",
@@ -254,12 +221,12 @@ tweet_text <-
     format(tail(data_br$new_deaths, 1), nsmall=1, big.mark=".", decimal.mark = ","),
     " novos óbitos. \n\n",
     "📊 A incidência máxima de: \n",
-    "⬆️ casos confirmados foi de ",
+    "🤒️ casos confirmados foi de ",
     format(max(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
     format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d %B de %Y"),
     "; \n",
-    "⬆️ óbitos foi de ",
+    "💀️ óbitos foi de ",
     format(max(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
     format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d %B de %Y"),
@@ -268,5 +235,5 @@ tweet_text <-
 
 # post the image to Twitter
 rtweet::post_tweet(status = tweet_text,
-                   # media = here::here("figures","combined.png"),
+                   media = here::here("fig.png"),
                    token = covidbrasilbot_token)
