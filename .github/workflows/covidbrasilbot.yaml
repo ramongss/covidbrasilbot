@@ -8,7 +8,7 @@ on:
 
 jobs:
   covidbrasilbot-post:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
       TWITTER_CONSUMER_API_SECRET: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
@@ -21,8 +21,8 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - name: pt_BR.UTF-8
         run: |
-            export LC_ALL=pt_BR.UTF-8
-            export LANG=pt_BR.UTF-8
+            sudo locale-gen pt_BR.UTF-8
+            sudo update-locale LANG=pt_BR.UTF-8
       - name: Test language
         run: |
             date
