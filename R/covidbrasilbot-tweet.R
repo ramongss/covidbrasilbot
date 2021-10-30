@@ -86,22 +86,14 @@ ma_plot_deaths <- function(data, colour = "red") {
     ggplot2::labs(
       caption = paste0(
         'Fonte: Brasil.IO COVID-19 Dataset - Última atualização\n',
-        format(Sys.time(), '%d %b %Y, %H:%M'),
-        '(UTC) | Twitter: @covidbrasilbot'
+        format(`attr<-`(Sys.time(),"tzone","America/Sao_Paulo"), '%d %b %Y, %H:%M'),
+        '(UTC -3:00) | Twitter: @covidbrasilbot'
       )
     )+
     ggplot2::coord_cartesian(
       ylim = c(0, roundUp(max(data$new_deaths), 300)+300)
     )
 }
-
-# save figure deaths
-ma_plot_deaths(data_br, colour = "#9B0000") |>
-  ggplot2::ggsave(filename = here::here("figures","deaths.png"),
-                  device = "png",
-                  units = "in",
-                  width = 12,
-                  height = 6.75)
 
 # plot function - confirmed cases
 ma_plot_conf <- function(data, colour = "blue") {
@@ -165,8 +157,8 @@ ma_plot_conf <- function(data, colour = "blue") {
     ggplot2::labs(
       caption = paste0(
         'Fonte: Brasil.IO COVID-19 Dataset - Última atualização\n',
-        format(Sys.time(), '%d %b %Y, %H:%M'),
-        '(UTC) | Twitter: @covidbrasilbot'
+        format(`attr<-`(Sys.time(),"tzone","America/Sao_Paulo"), '%d %b %Y, %H:%M'),
+        '(UTC -3:00) | Twitter: @covidbrasilbot'
       )
     )+
     ggplot2::coord_cartesian(
@@ -174,22 +166,16 @@ ma_plot_conf <- function(data, colour = "blue") {
     )
 }
 
-# save figure confirmed cases
-ma_plot_conf(data_br, colour = "#2171B5") |>
-  ggplot2::ggsave(filename = here::here("figures","confirmed.png"),
-                  device = "png",
-                  units = "in",
-                  width = 12,
-                  height = 6.75)
-
-
+# plot figures
 c <- ma_plot_conf(data_br, colour = "#2171B5")
 d <- ma_plot_deaths(data_br, colour = "#9B0000")
 
+# join figures
 figure <- ggpubr::ggarrange(c, d, ncol = 2)
 
+# save figure
 figure |>
-  ggplot2::ggsave(filename = here::here("fig.png"),
+  ggplot2::ggsave(filename = here::here("figures", "fig.png"),
                   device = "png",
                   units = "in",
                   width = 24,
@@ -235,5 +221,5 @@ tweet_text <-
 
 # post the image to Twitter
 rtweet::post_tweet(status = tweet_text,
-                   media = here::here("fig.png"),
+                   media = here::here("figures", "fig.png"),
                    token = covidbrasilbot_token)
