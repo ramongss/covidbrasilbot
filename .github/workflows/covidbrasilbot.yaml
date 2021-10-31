@@ -1,8 +1,10 @@
 name: covidbrasilbot
 
 on:
+  push:
+    - branches: master
   schedule:
-    - cron: '30 00 * * *'
+    - cron: '30 0 * * *'
 
 jobs:
   covidbrasilbot-post:
