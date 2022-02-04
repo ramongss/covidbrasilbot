@@ -195,7 +195,7 @@ covidbrasilbot_token <- rtweet::create_token(
 tweet_text <-
   paste0(
     "📅 ",
-    format.Date(max(data_br$date), "%d de %B de %Y"),
+    format.Date(max(data_br$date), "%d de %b. de %Y"),
     "\n\n🇧🇷",
     " #Brasil soma ",
     format(sum(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
@@ -210,12 +210,12 @@ tweet_text <-
     "🤒️ casos confirmados foi de ",
     format(max(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
-    format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d de %b. %Y"),
+    format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d %b. %Y"),
     "; \n",
     "💀️ óbitos foi de ",
     format(max(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
-    format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d de %b. %Y"),
+    format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d %b. %Y"),
     "."
   )
 
