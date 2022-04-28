@@ -7,17 +7,13 @@ library(extrafont)
 
 # dowload and treat data
 data_br <-
-  data.table::fread(input = "https://data.brasil.io/dataset/covid19/caso_full.csv.gz",
-                    encoding = "UTF-8") |>
-  dplyr::filter(place_type == "state") |>
-  dplyr::group_by(date) |>
-  dplyr::summarize(new_confirmed = sum(new_confirmed),
-                   new_deaths = sum(new_deaths)) |>
-  dplyr::mutate(date = as.Date(date),
-                ma_conf = zoo::rollmean(new_confirmed, k = 7, fill = NA, align = "right"),
-                ma_deaths = zoo::rollmean(new_deaths, k = 7, fill = NA, align = "right")) |>
-  dplyr::ungroup() |>
-  as.data.frame()
+  readr::read_csv("https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv") |>
+  dplyr::filter(state == "TOTAL") |>
+  dplyr::select(date, new_confirmed = newCases, new_deaths = newDeaths) |>
+  dplyr::mutate(
+    ma_conf = zoo::rollmean(new_confirmed, k = 7, fill = NA, align = "right"),
+    ma_deaths = zoo::rollmean(new_deaths, k = 7, fill = NA, align = "right")
+  )
 
 # function to round up the plot breaks
 roundUp <- function(x, to = 10) {
@@ -210,12 +206,12 @@ tweet_text <-
     "🤒️ casos confirmados foi de ",
     format(max(data_br$new_confirmed), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
-    format.Date(data_br[which(data_br$new_confirmed == max(data_br$new_confirmed)), 'date'], "%d %b. %Y"),
+    format.Date(dplyr::pull(data_br[data_br['new_confirmed'] == max(data_br$new_confirmed), 'date'], date), "%d %b. %Y"),
     "; \n",
     "💀️ óbitos foi de ",
     format(max(data_br$new_deaths), nsmall=1, big.mark=".", decimal.mark = ","),
     " em ",
-    format.Date(data_br[which(data_br$new_deaths == max(data_br$new_deaths)), 'date'], "%d %b. %Y"),
+    format.Date(dplyr::pull(data_br[data_br['new_deaths'] == max(data_br$new_deaths), 'date'], date), "%d %b. %Y"),
     "."
   )
 
