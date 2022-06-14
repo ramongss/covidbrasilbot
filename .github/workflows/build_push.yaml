@@ -31,7 +31,7 @@ jobs:
           images: ramongss/covidbrasilbot
       -
         name: Echo tags
-        run: echo ${{ tag }}
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}"
       # -
       #   name: Build and push
       #   uses: docker/build-push-action@v3
