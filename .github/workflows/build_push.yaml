@@ -31,10 +31,7 @@ jobs:
           images: ramongss/covidbrasilbot
       -
         name: Echo tags
-        run: echo ${{ steps.meta.outputs.tags }}
-      -
-        name: Echo labels
-        run: echo ${{ steps.meta.outputs.labels }}
+        run: echo ${{ tag }}
       # -
       #   name: Build and push
       #   uses: docker/build-push-action@v3
