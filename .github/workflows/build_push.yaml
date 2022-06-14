@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - 'feature/ci'
 
 jobs:
   docker:
@@ -31,7 +33,5 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
