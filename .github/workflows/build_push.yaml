@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - 'feature/ci'
 
 jobs:
   docker:
@@ -34,11 +32,8 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       -
-        name: Echo
-        run: echo ${{ steps.get_version.outputs.VERSION }}
-      # -
-      #   name: Build and push
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
