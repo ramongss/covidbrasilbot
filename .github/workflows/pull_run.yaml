@@ -3,8 +3,6 @@ name: Pull Docker Image from Container Registry and Run
 on:
   schedule:
     - cron: "45 23 * * *"
-  push:
-    branches: feature/ci
 
 jobs:
   docker:
