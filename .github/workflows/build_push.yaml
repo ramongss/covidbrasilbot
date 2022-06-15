@@ -28,10 +28,6 @@ jobs:
         with:
           images: ramongss/covidbrasilbot
       -
-        name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      -
         name: Build and push
         uses: docker/build-push-action@v3
         with:
